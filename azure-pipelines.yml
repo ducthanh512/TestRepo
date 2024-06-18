@@ -1,41 +1,31 @@
-# Node.js with Angular
-# Build a Node.js project that uses Angular.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+﻿# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
 
 trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
-  
-variables:
-   buildConfiguration: 'prod'
+  vmImage: 'ubuntu-latest'
 
 steps:
-- script: |
-    npm install -g @angular/cli
-    npm install
-    npm run build-prod
-  displayName: 'Build Angular App'
-  
-- task: CopyFiles@2
+- task: DotNetCoreCLI@2
   inputs:
-    SourceFolder: '$(Build.SourcesDirectory)/dist/upload-client/browser'
-    Contents: '**'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    command: 'build'
+    projects: '**/*.csproj'
+    arguments: '--output $(Build.BinariesDirectory)/publish_output --configuration Release'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.BinariesDirectory)/publish_output'
+    includeRootFolder: false
+    archiveType: 'zip'
+    archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
 
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    artifactName: 'drop'
+    ArtifactName: 'drop'
     publishLocation: 'Container'
-  displayName: 'Publish Build Artifacts'
-
-- task: AzureRmWebAppDeployment@4
-  inputs:
-    ConnectionType: 'AzureRM'
-    azureSubscription: 'Visual Studio Enterprise Subscription – MPN (b7d2a9f2-5d5f-45ad-b35a-eebbf9f2e76b)'
-    appType: 'webApp'
-    WebAppName: 'odpp-client'
-    packageForLinux: '$(Build.ArtifactStagingDirectory)'
