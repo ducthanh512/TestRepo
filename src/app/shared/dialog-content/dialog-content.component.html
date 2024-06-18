@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>These files are selected for this category</h2>
+<mat-dialog-content class="mat-typography fw-bold">
+  <ul>
+    <li *ngFor="let file of data?.duplicatedFiles">
+      <p>{{ file.fileName }}</p>
+    </li>
+  </ul>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close class="btn btn-primary">Cancel</button>
+</mat-dialog-actions>

@@ -1,0 +1,55 @@
+<div class="card">
+  <div class="card-header">{{ category }}</div>
+  <div class="card-body">
+    <div class="card-title">
+      <div class="dropzone" appDrag (multipleFiles)="fileDropped($event)">
+        <div class="text-wrapper">
+          <div class="centered">
+            <img
+              class="icon-updownload-size"
+              src="../../../assets/upload.png"
+            />
+          </div>
+          <div class="centered">
+            Drag and drop your file or&nbsp;
+            <span (click)="selectFile.click()" class="btn-browse-files">
+              browse
+            </span>
+            &nbsp;a file
+          </div>
+        </div>
+      </div>
+
+      <input
+        style="display: none"
+        type="file"
+        multiple
+        value="select"
+        #selectFile
+        (change)="onFileSelected($event)"
+      />
+    </div>
+  </div>
+  <div class="card-text">
+    <div class="row">
+      <mat-grid-list cols="1" rowHeight="2rem">
+        <mat-grid-tile *ngFor="let file of multipleFiles; let i = index">
+          <div class="col-xs-10 col-sm-9">
+            <div>
+              {{ file.fileName }}
+            </div>
+          </div>
+          <div class="col-xs-10 col-sm-1">
+            <div (click)="removeFile(i)">
+              <img
+                class="icon-size"
+                title="remove"
+                src="../../../assets/remove.png"
+              />
+            </div>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+<div>
+    <mat-toolbar color="primary">
+        <a class="title" href="/">{{ title }}</a>
+      
+        <div class="toolbar-spacer"></div>
+      
+        <a mat-button [routerLink]="['profile']">Profile</a>
+        <a mat-button [routerLink]="['webapi']">Web API</a>
+      
+        <button mat-raised-button *ngIf="!loginDisplay" (click)="login()">Login</button>
+        <button mat-raised-button *ngIf="loginDisplay" (click)="logout()">Logout</button>
+      
+      </mat-toolbar>
+<!-- <app-list></app-list> -->
+<!-- <app-upload-wrapper></app-upload-wrapper> -->
+<!-- <app-tree-menu></app-tree-menu> -->
+<!-- <app-tab-menu></app-tab-menu> -->
+<app-upload-screen></app-upload-screen>
+<router-outlet />
+</div>

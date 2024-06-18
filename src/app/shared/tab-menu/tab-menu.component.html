@@ -1,0 +1,138 @@
+<div>
+  <!-- Page header with logo and tagline-->
+  <header class="py-3 bg-light border-bottom mb-4 title-bar">
+    <div class="container">
+      <div class="row">
+        <div class="col-2">
+          <div class="row">
+            <div class="col-12 d-flex flex-row bd-highlight">
+              <h2 class="fw-bold">
+                {{ matterNewChange?.matterName }}
+              </h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 d-flex flex-row bd-highlight">
+              <h3 class="text-secondary">Matter Name</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div class="row">
+            <div class="col-12 d-flex flex-row bd-highlight">
+              <h2 class="fw-bold">
+                {{ matterNewChange?.matterNumber }}
+              </h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 d-flex flex-row bd-highlight">
+              <h3 class="text-secondary">Matter Number</h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-2">
+          <div class="row">
+            <div class="col-12 d-flex flex-row bd-highlight">
+              <h2 class="fw-bold">
+                {{ matterNewChange?.firstHNumber }}
+              </h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 d-flex flex-row bd-highlight">
+              <h3 class="text-secondary">H Number</h3>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="col-2"
+          *ngIf="uploadService.defaultBriefType == 'MatterNumber'"
+        >
+          <div class="row">
+            <div class="col-12 d-flex flex-row bd-highlight">
+              <h2 class="fw-bold">Advisings</h2>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 d-flex flex-row bd-highlight">
+              <h3 class="text-secondary">Brief Type</h3>
+            </div>
+          </div>
+        </div>
+        <div class="col d-flex justify-content-end">
+          <div class="ms-auto p-3 bd-highlight">
+            <button
+            [disabled]="uploadService.startingUpload"
+              type="button"
+              class="btn btn-primary btn-green"
+              (click)="staringUpload()"
+            >
+              Upload All
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <mat-tab-group
+    dynamicHeight
+    class="custom-tab"
+    [disablePagination]="true"
+    animationDuration="0ms"
+    *ngIf="!uploadService.startingUpload"
+  >
+  
+    @for (item of categorylist; track item) {
+    <mat-tab [label]="item.name">
+      <ng-template mat-tab-label>
+   
+        <span>{{item.name}}</span>
+        <span *ngIf="item.numOfFiles>0" class="numberCircle clrGreen"><span>{{item.numOfFiles}}</span></span>
+    </ng-template>
+
+      <div class="h-100 upload-area pt-2">
+        <app-bigger-uploader
+          [category]="item.name"
+          (sendSelectedFiles)="receivedSelectedFiles($event)"
+        ></app-bigger-uploader>
+      </div>
+    </mat-tab>
+    }
+  </mat-tab-group>
+
+  <div class="row g-3" *ngIf="uploadService.startingUpload">
+    <div>
+      <h1
+        class="fw-bold d-flex justify-content-center"
+        *ngIf="
+          uploadServiceTab !== undefined &&
+          !uploadServiceTab.isCompleted
+        "
+      >
+        Your documents have been uploading, please just leave this tab
+        open..
+      </h1>
+      <h1
+        class="fw-bold d-flex justify-content-center"
+        *ngIf="
+          uploadServiceTab !== undefined &&
+          uploadServiceTab.isCompleted
+        "
+      >
+        Your documents are uploaded successfully.
+      </h1>
+    </div>
+    <div *ngFor="let fileUploadsByCategory of fileUploadsByCategories">
+      <app-uploading
+        [fileUploadsByCategory]="fileUploadsByCategory"
+      ></app-uploading>
+    </div>
+  </div>
+
+
+</div>

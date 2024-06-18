@@ -1,0 +1,54 @@
+.example-container {
+  min-height: 80vh;
+}
+
+.example-sidenav-content {
+  height: 100%;
+  background-color: var(--bs-white);
+}
+
+.example-sidenav {
+  padding: 2rem;
+}
+
+.row > * {
+  padding-left: 0%;
+  padding-right: 0%;
+}
+
+.mat-drawer {
+  min-width: 20%;
+}
+
+.spinning-box {
+  z-index: 999;
+  opacity: 0.5;
+  background-color: red;
+}
+
+.error-message {
+  color: red;
+  margin-top: 1rem;
+}
+
+.title-bar {
+  min-height: 5rem;
+}
+.navbar-container {
+  background-color: var(--bs-blue-deep);
+  color: white;
+  width: 100%;
+}
+.navbar-item {
+  width: 100%;
+}
+
+.material-icons.color_white {
+  color: #ffffff;
+}
+
+.breadcrumb-container {
+  background-color: white;
+  color: var(--bs-gray-text);
+
+}
